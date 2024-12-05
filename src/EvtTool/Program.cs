@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
 using Newtonsoft.Json;
 
 namespace EvtTool
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main( string[] args )
         {
             //var uniqueValues = new Dictionary<string, HashSet<object>>();
 
@@ -58,7 +57,7 @@ namespace EvtTool
             }
             if ( path == null )
             {
-                Console.WriteLine("EvtTool 1.4 by TGE\n" +
+                Console.WriteLine( "EvtTool 1.4 by TGE\n" +
                                    "\n" +
                                    "Usage:\n" +
                                    "EvtTool <file path>\n" +
@@ -68,13 +67,13 @@ namespace EvtTool
             }
             if ( !File.Exists( path ) )
             {
-                Console.WriteLine("Specified file doesn't exist.");
+                Console.WriteLine( "Specified file doesn't exist." );
                 return;
             }
 
             if ( path.EndsWith( "json", StringComparison.InvariantCultureIgnoreCase ) )
             {
-                var json = File.ReadAllText(path);
+                var json = File.ReadAllText( path );
                 ISaveable file;
                 var settings = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error };
 
@@ -82,11 +81,11 @@ namespace EvtTool
                 {
                     if ( path.EndsWith( ".EVT.json", StringComparison.InvariantCultureIgnoreCase ) )
                     {
-                        file = JsonConvert.DeserializeObject<EvtFile>(json, settings);
+                        file = JsonConvert.DeserializeObject<EvtFile>( json, settings );
                     }
                     else if ( path.EndsWith( ".ECS.json", StringComparison.InvariantCultureIgnoreCase ) )
                     {
-                        file = JsonConvert.DeserializeObject<EcsFile>(json, settings);
+                        file = JsonConvert.DeserializeObject<EcsFile>( json, settings );
                     }
                     else if ( path.EndsWith( ".lsd.json", StringComparison.InvariantCultureIgnoreCase ) )
                     {
@@ -95,7 +94,7 @@ namespace EvtTool
                     else
                     {
                         Console.WriteLine(
-                            "Unrecognized source file type. Did you alter the extension of the file? Expected name format is 'filename.format.json'");
+                            "Unrecognized source file type. Did you alter the extension of the file? Expected name format is 'filename.format.json'" );
                         return;
                     }
                 }
@@ -106,8 +105,8 @@ namespace EvtTool
                 }
                 if ( outputToConsole == true )
                 {
-                    Console.WriteLine(file.ToString());
-;                    return;
+                    Console.WriteLine( file.ToString() );
+;                   return;
                 }
                 file.Save( Path.ChangeExtension( path, null ) );
             }
@@ -125,7 +124,7 @@ namespace EvtTool
                     obj = new EcsFile( path );
                     extension = "ECS.json";
                 }
-                else if  ( path.EndsWith( "lsd", StringComparison.InvariantCultureIgnoreCase ) )
+                else if ( path.EndsWith( "lsd", StringComparison.InvariantCultureIgnoreCase ) )
                 {
                     var lsd = new LsdFile( path );
                     obj = lsd.Lists;
