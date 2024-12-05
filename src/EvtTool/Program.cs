@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using Newtonsoft.Json;
 
 namespace EvtTool
 {
     internal static class Program
     {
-        private static void Main( string[] args )
+        private static void Main(string[] args)
         {
             //var uniqueValues = new Dictionary<string, HashSet<object>>();
 
@@ -40,86 +41,109 @@ namespace EvtTool
             //}
             //return;
 
-            if ( args.Length == 0 )
+
+            string path = null;
+            var outputToConsole = false;
+
+            foreach (var arg in args)
             {
-                Console.WriteLine( "EvtTool 1.4 by TGE\n" +
+                if (arg == "--no-output")
+                {
+                    outputToConsole = true;
+                }
+                else if (path == null)
+                {
+                    path = arg;
+                }
+            }
+            if (path == null)
+            {
+                Console.WriteLine("EvtTool 1.4 by TGE\n" +
                                    "\n" +
                                    "Usage:\n" +
                                    "EvtTool <file path>\n" +
-                                   "Drag .EVT, .ECS or .lsd file onto the program to convert to JSON, drag JSON file to convert back.\n" );
+                                   "Drag .EVT, .ECS or .lsd file onto the program to convert to JSON, drag JSON file to convert back.\n" +
+                                   "Use the --no-output flag to output the result into the console instead of a file.\n");
+                return;
+            }
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("Specified file doesn't exist.");
                 return;
             }
 
-            var path = args[0];
-            if ( !File.Exists( path ) )
+            if (path.EndsWith("json", StringComparison.InvariantCultureIgnoreCase))
             {
-                Console.WriteLine( "Specified file doesn't exist." );
-                return;
-            }
-
-            if ( path.EndsWith( "json", StringComparison.InvariantCultureIgnoreCase ) )
-            {
-                var json = File.ReadAllText( path );
+                var json = File.ReadAllText(path);
                 ISaveable file;
                 var settings = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error };
 
                 try
                 {
-                    if ( path.EndsWith( ".EVT.json", StringComparison.InvariantCultureIgnoreCase ) )
+                    if (path.EndsWith(".EVT.json", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        file = JsonConvert.DeserializeObject<EvtFile>( json, settings );
+                        file = JsonConvert.DeserializeObject<EvtFile>(json, settings);
                     }
-                    else if ( path.EndsWith( ".ECS.json", StringComparison.InvariantCultureIgnoreCase ) )
+                    else if (path.EndsWith(".ECS.json", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        file = JsonConvert.DeserializeObject<EcsFile>( json, settings );
+                        file = JsonConvert.DeserializeObject<EcsFile>(json, settings);
                     }
-                    else if ( path.EndsWith( ".lsd.json", StringComparison.InvariantCultureIgnoreCase ) )
+                    else if (path.EndsWith(".lsd.json", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        file = new LsdFile( JsonConvert.DeserializeObject<List<LsdList>>( json, settings ) );
+                        file = new LsdFile(JsonConvert.DeserializeObject<List<LsdList>>(json, settings));
                     }
                     else
                     {
                         Console.WriteLine(
-                            "Unrecognized source file type. Did you alter the extension of the file? Expected name format is 'filename.format.json'" );
+                            "Unrecognized source file type. Did you alter the extension of the file? Expected name format is 'filename.format.json'");
                         return;
                     }
                 }
-                catch ( Exception )
+                catch (Exception)
                 {
-                    Console.WriteLine( "Error occured while deserializing JSON. The JSON provided is either corrupt or incompatible." );
+                    Console.WriteLine("Error occured while deserializing JSON. The JSON provided is either corrupt or incompatible.");
                     return;
                 }
-
-                file.Save( Path.ChangeExtension( path, null ) );
+                if (outputToConsole == true)
+                {
+                    Console.WriteLine(file.ToString());
+;                    return;
+                }
+                file.Save(Path.ChangeExtension(path, null));
             }
             else
             {
                 var extension = "EVT.json";
                 object obj;
 
-                if ( path.EndsWith( "evt", StringComparison.InvariantCultureIgnoreCase ) )
+                if (path.EndsWith("evt", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    obj = new EvtFile( path );
+                    obj = new EvtFile(path);
                 }
-                else if ( path.EndsWith( "ecs", StringComparison.InvariantCultureIgnoreCase ) )
+                else if (path.EndsWith("ecs", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    obj = new EcsFile( path );
+                    obj = new EcsFile(path);
                     extension = "ECS.json";
                 }
-                else if ( path.EndsWith( "lsd", StringComparison.InvariantCultureIgnoreCase ) )
+                else if (path.EndsWith("lsd", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var lsd = new LsdFile( path );
+                    var lsd = new LsdFile(path);
                     obj = lsd.Lists;
                     extension = "lsd.json";
                 }
                 else
                 {
-                    Console.WriteLine( "Unrecognized file type." );
+                    Console.WriteLine("Unrecognized file type.");
                     return;
                 }
 
-                var json = JsonConvert.SerializeObject( obj, Formatting.Indented );
-                File.WriteAllText( Path.ChangeExtension( path, extension ), json );
+                var json = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented);
+                if (outputToConsole == true)
+                {
+                    Console.WriteLine(json);
+                    return;
+                }
+                File.WriteAllText(Path.ChangeExtension(path, extension), json);
             }
         }
     }
