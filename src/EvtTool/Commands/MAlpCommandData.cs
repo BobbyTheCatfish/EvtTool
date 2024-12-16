@@ -4,8 +4,8 @@ namespace EvtTool
 {
     public sealed class MAlpCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         public int AlphaLevel { get; set; }
+        public int Static00 { get; set; } = 0;
         public int Field08 { get; set; }
         public int Field0C { get; set; }
 

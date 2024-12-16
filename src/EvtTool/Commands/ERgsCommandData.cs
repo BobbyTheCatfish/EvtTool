@@ -7,9 +7,9 @@ namespace EvtTool
 {
     public sealed class ERgsCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         [JsonConverter(typeof(StringEnumConverter))]
         public RegisterStatus Action { get; set; }
+        public int Static00 { get; set; } = 0;
         public int Static08 { get; set; } = 0;
         public int Static0C { get; set; } = 0;
 

@@ -7,10 +7,10 @@ namespace EvtTool
 {
     public sealed class CmCnCommandData : CommandData
     {
-        public int Unused00 { get; set; } = 0;
         [JsonConverter(typeof(StringEnumConverter))]
         public DirectionEnum Direction { get; set; }
         public float Distance { get; set; }
+        public int Unused00 { get; set; } = 0;
         public int Unused0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
