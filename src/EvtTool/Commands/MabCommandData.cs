@@ -5,12 +5,12 @@ namespace EvtTool
     internal class MabCommandData : CommandData
     {
         public int AnimationID { get; set; }
-        public int Field04 { get; set; }
-        public int LoopBool { get; set; }
+        public bool Loop { get; set; }
         public float AnimationSpeed { get; set; }
+        public int Field04 { get; set; }
         public int Field10 { get; set; }
         public int Field14 { get; set; }
-        public int Field18 { get; set; }
+        public bool Field18 { get; set; }
         public float Field1C { get; set; }
         public byte Field20 { get; set; }
         public byte Field21 { get; set; }
@@ -20,18 +20,18 @@ namespace EvtTool
         public int Field2C { get; set; }
         public int Field30 { get; set; }
         public int Field34 { get; set; }
-        public int Field38 { get; set; }
-        public int Field3C { get; set; }
+        public int Static38 { get; set; } = 0;
+        public int Static3C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
             AnimationID = reader.ReadInt32();
             Field04 = reader.ReadInt32();
-            LoopBool = reader.ReadInt32();
+            Loop = reader.ReadInt32() == 1;
             AnimationSpeed = reader.ReadSingle();
             Field10 = reader.ReadInt32();
             Field14 = reader.ReadInt32();
-            Field18 = reader.ReadInt32();
+            Field18 = reader.ReadInt32() == 1;
             Field1C = reader.ReadSingle();
             Field20 = reader.ReadByte();
             Field21 = reader.ReadByte();
@@ -41,8 +41,9 @@ namespace EvtTool
             Field2C = reader.ReadInt32();
             Field30 = reader.ReadInt32();
             Field34 = reader.ReadInt32();
-            Field38 = reader.ReadInt32();
-            Field3C = reader.ReadInt32();
+
+            Static38 = reader.ReadInt32();
+            Static3C = reader.ReadInt32();
         }
 
 
@@ -50,11 +51,11 @@ namespace EvtTool
         {
             writer.Write(AnimationID);
             writer.Write( Field04 );
-            writer.Write( LoopBool );
+            writer.Write( Loop == true ? 1 : 0 );
             writer.Write(AnimationSpeed);
             writer.Write( Field10 );
             writer.Write( Field14 );
-            writer.Write( Field18 );
+            writer.Write( Field18 == true ? 1 : 0 );
             writer.Write( Field1C );
             writer.Write( Field20 );
             writer.Write( Field21 );
@@ -64,8 +65,8 @@ namespace EvtTool
             writer.Write( Field2C );
             writer.Write( Field30 );
             writer.Write( Field34 );
-            writer.Write( Field38 );
-            writer.Write( Field3C );
+            writer.Write( Static38 );
+            writer.Write( Static3C );
         }
     }
 }

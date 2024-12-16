@@ -6,14 +6,19 @@ namespace EvtTool
     {
         public int Field00 { get; set; }
         public int Field04 { get; set; }
-        public int Field08 { get; set; }
+        public int Static08 { get; set; } = 0;
         public int Field0C { get; set; }
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
+            // 0-3
             Field00 = reader.ReadInt32();
+            // 0-21
             Field04 = reader.ReadInt32();
-            Field08 = reader.ReadInt32();
+
+            Static08 = reader.ReadInt32();
+
+            // 0 or 240
             Field0C = reader.ReadInt32();
         }
 
@@ -21,7 +26,7 @@ namespace EvtTool
         {
             writer.Write( Field00 );
             writer.Write( Field04 );
-            writer.Write( Field08 );
+            writer.Write( Static08 );
             writer.Write( Field0C );
         }
     }

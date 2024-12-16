@@ -6,76 +6,86 @@ namespace EvtTool
 {
     public sealed class FlbkCommandData : CommandData
     {
-        public int Field00 { get; set; }
-        public short FlbkImageMajorId { get; set; }
-        public short FlbkImageMinorId { get; set; }
-        public int FlbkImageOpacity { get; set; }
-        public int Field0C { get; set; }
-        public float Field10 { get; set; }
-        public float Field14 { get; set; }
+        public short ImageMajorId { get; set; }
+        public short ImageMinorId { get; set; }
+        public int Opacity { get; set; }
+        public int ObjDrawOverImage { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static0C { get; set; } = 1;
+        public float Static10 { get; set; } = 80;
+        public float Static14 { get; set; } = 250;
         public float Field18 { get; set; }
         public float Field1C { get; set; }
         public float Field20 { get; set; }
         public float Field24 { get; set; }
-        public float Field28 { get; set; }
-        public int ObjDrawOverImage { get; set; }
+        public float Static28 { get; set; } = 15;
         public int Field30 { get; set; }
         public int Field34 { get; set; }
-        public int Field38 { get; set; }
-        public int Field3C { get; set; }
-        public int Field40 { get; set; }
-        public int Field44 { get; set; }
-        public int Field48 { get; set; }
-        public int Field4C { get; set; }
+        public int Static38 { get; set; }
+        public int Static3C { get; set; }
+        public int Static40 { get; set; }
+        public int Static44 { get; set; }
+        public int Static48 { get; set; }
+        public int Static4C { get; set; }
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
-            FlbkImageMajorId = reader.ReadInt16();
-            FlbkImageMinorId = reader.ReadInt16();
-            FlbkImageOpacity = reader.ReadInt32();
-            Field0C = reader.ReadInt32();
-            Field10 = reader.ReadSingle();
-            Field14 = reader.ReadSingle();
+            ImageMajorId = reader.ReadInt16();
+            ImageMinorId = reader.ReadInt16();
+            Opacity = reader.ReadInt32();
+
+            Static0C = reader.ReadInt32();
+            Static10 = reader.ReadSingle();
+            Static14 = reader.ReadSingle();
+            
+            // 2/3 or 1
             Field18 = reader.ReadSingle();
+            // 2/3 or 2 2/3
             Field1C = reader.ReadSingle();
+            // 1 2/3 or 3 1/3
             Field20 = reader.ReadSingle();
+            // 3 or 3 1/3
             Field24 = reader.ReadSingle();
-            Field28 = reader.ReadSingle();
+
+            Static28 = reader.ReadSingle();
+            // 3 or 4
             ObjDrawOverImage = reader.ReadInt32();
+            // 0-5
             Field30 = reader.ReadInt32();
+            //0-9
             Field34 = reader.ReadInt32();
-            Field38 = reader.ReadInt32();
-            Field3C = reader.ReadInt32();
-            Field40 = reader.ReadInt32();
-            Field44 = reader.ReadInt32();
-            Field48 = reader.ReadInt32();
-            Field4C = reader.ReadInt32();
+
+            Static38 = reader.ReadInt32();
+            Static3C = reader.ReadInt32();
+            Static40 = reader.ReadInt32();
+            Static44 = reader.ReadInt32();
+            Static48 = reader.ReadInt32();
+            Static4C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
-            writer.Write(FlbkImageMajorId);
-            writer.Write(FlbkImageMinorId);
-            writer.Write(FlbkImageOpacity);
-            writer.Write( Field0C );
-            writer.Write( Field10 );
-            writer.Write( Field14 );
+            writer.Write( Static00 );
+            writer.Write(ImageMajorId);
+            writer.Write(ImageMinorId);
+            writer.Write(Opacity);
+            writer.Write( Static0C );
+            writer.Write( Static10 );
+            writer.Write( Static14 );
             writer.Write( Field18 );
             writer.Write( Field1C );
             writer.Write( Field20 );
             writer.Write( Field24 );
-            writer.Write( Field28 );
+            writer.Write( Static28 );
             writer.Write( ObjDrawOverImage );
             writer.Write( Field30 );
             writer.Write( Field34 );
-            writer.Write( Field38 );
-            writer.Write( Field3C );
-            writer.Write( Field40 );
-            writer.Write( Field44 );
-            writer.Write( Field48 );
-            writer.Write( Field4C );
+            writer.Write( Static38 );
+            writer.Write( Static3C );
+            writer.Write( Static40 );
+            writer.Write( Static44 );
+            writer.Write( Static48 );
+            writer.Write( Static4C );
         }
     }
 }

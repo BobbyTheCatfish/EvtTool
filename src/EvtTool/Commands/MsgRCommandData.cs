@@ -23,8 +23,10 @@ namespace EvtTool
             MessageIndex = reader.ReadInt32();
             SelIndex = reader.ReadInt32();
             LocalDataIdSelStorage = reader.ReadInt32();
+            // 3-5
             Field10 = reader.ReadInt32();
             Field14 = reader.ReadSingle();
+            // 565 or 528
             Field18 = reader.ReadSingle();
             Field1C = reader.ReadSingle();
         }

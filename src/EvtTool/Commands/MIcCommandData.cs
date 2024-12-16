@@ -6,26 +6,29 @@ namespace EvtTool
 {
     public sealed class MIcCommandData : CommandData
     {
-        public int Field00 { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public IconEnum Icon { get; set; }
-        public int IconSizeIndex { get; set; }
-        public int Field0C { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public IconSizeEnum IconSize { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
+            Static00 = reader.ReadInt32();
+
             Icon = (IconEnum)reader.ReadInt32();
-            IconSizeIndex = reader.ReadInt32();
-            Field0C = reader.ReadInt32();
+            IconSize = (IconSizeEnum)reader.ReadInt32();
+
+            Static0C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
+            writer.Write( Static00 );
             writer.Write( (int)Icon );
-            writer.Write( IconSizeIndex );
-            writer.Write( Field0C );
+            writer.Write( (int)IconSize );
+            writer.Write( Static0C );
         }
 
         public enum IconEnum
@@ -47,6 +50,14 @@ namespace EvtTool
             Horiz_Meow_L = 24,
             SS_Sparkle = 25,
             Sweat_Blue = 26,
+        }
+
+        public enum IconSizeEnum
+        {
+            Normal = 0,
+            Small = 1,
+            Medium = 2,
+            Large = 3
         }
     }
 }

@@ -1,9 +1,13 @@
+using System.ComponentModel;
+using System.Numerics;
 using EvtTool.IO;
+using Newtonsoft.Json;
 
 namespace EvtTool
 {
     public sealed class CmdCommandData : CommandData
     {
+        public Vector3[] Movements {  get; set; } 
         public int Field00 { get; set; }
         public float Field04 { get; set; }
         public float Field08 { get; set; }
@@ -18,27 +22,22 @@ namespace EvtTool
         public float Field2C { get; set; }
         public float Field30 { get; set; }
         public int Field34 { get; set; }
-        public int Field38 { get; set; }
-        public int Field3C { get; set; }
+        public int Static38 { get; set; } = 0;
+        public int Static3C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
+            // 15 or 31
             Field00 = reader.ReadInt32();
-            Field04 = reader.ReadSingle();
-            Field08 = reader.ReadSingle();
-            Field0C = reader.ReadSingle();
-            Field10 = reader.ReadSingle();
-            Field14 = reader.ReadSingle();
-            Field18 = reader.ReadSingle();
-            Field1C = reader.ReadSingle();
-            Field20 = reader.ReadInt32();
-            Field24 = reader.ReadSingle();
-            Field28 = reader.ReadSingle();
-            Field2C = reader.ReadSingle();
-            Field30 = reader.ReadSingle();
+            // these seem to be movement values
+            // Field20 (entry 4 single 3) was originally an int32. not sure if this was a typo or not
+            Movements = reader.ReadVector3s(4);
+
+            // 0-4
             Field34 = reader.ReadInt32();
-            Field38 = reader.ReadInt32();
-            Field3C = reader.ReadInt32();
+
+            Static38 = reader.ReadInt32();
+            Static3C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
@@ -57,8 +56,8 @@ namespace EvtTool
             writer.Write( Field2C );
             writer.Write( Field30 );
             writer.Write( Field34 );
-            writer.Write( Field38 );
-            writer.Write( Field3C );
+            writer.Write( Static38 );
+            writer.Write( Static3C );
         }
     }
 }

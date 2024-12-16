@@ -4,30 +4,33 @@ namespace EvtTool
 {
     public class GgGgCommandData : CommandData
     {
-        public int UnusedField00 { get; set; }
-
+        public int Unused00 { get; set; } = 0;
         public int Field04 { get; set; }
-
-        public short Field08 { get; set; }
+        public short Static08 { get; set; } = 0;
         public short Field0A { get; set; }
-
-        public int UnusedField0C { get; set; }
+        public int Unused0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            UnusedField00 = reader.ReadInt32();
+            Unused00 = reader.ReadInt32();
+
+            // 1-3
             Field04 = reader.ReadInt32();
-            Field08 = reader.ReadInt16();
+
+            Static08 = reader.ReadInt16();
+
+            // 0-2
             Field0A = reader.ReadInt16();
-            UnusedField0C = reader.ReadInt32();
+
+            Unused0C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( UnusedField00 );
+            writer.Write( Unused00 );
             writer.Write( Field04 );
             writer.Write( Field0A );
-            writer.Write( UnusedField0C );
+            writer.Write( Unused0C );
         }
     }
 }

@@ -1,40 +1,38 @@
+using System.ComponentModel;
+using System.Numerics;
 using EvtTool.IO;
+using Newtonsoft.Json;
 
 namespace EvtTool
 {
     public sealed class EnFhCommandData : CommandData
     {
-        public int Field00 { get; set; }
-        public int Field04 { get; set; }
-        public int Field08 { get; set; }
-        public int Field0C { get; set; }
-        public float Field10 { get; set; }
-        public float Field14 { get; set; }
-        public float Field18 { get; set; }
-        public int Field1C { get; set; }
+        public int Static00 { get; set; } = 1;
+        public int Static04 { get; set; } = 4354;
+        public int Static08 { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
+        public Vector3 Field10 { get; set; }
+        public int Static1C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
-            Field04 = reader.ReadInt32();
-            Field08 = reader.ReadInt32();
-            Field0C = reader.ReadInt32();
-            Field10 = reader.ReadSingle();
-            Field14 = reader.ReadSingle();
-            Field18 = reader.ReadSingle();
-            Field1C = reader.ReadInt32();
+            Static00 = reader.ReadInt32();
+            Static04 = reader.ReadInt32();
+            Static08 = reader.ReadInt32();
+            Static0C = reader.ReadInt32();
+            // might be a vector? if not it's 3 singles.
+            Field10 = reader.ReadVector3();
+            Static1C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
-            writer.Write( Field04 );
-            writer.Write( Field08 );
-            writer.Write( Field0C );
+            writer.Write( Static00 );
+            writer.Write( Static04 );
+            writer.Write( Static08 );
+            writer.Write( Static0C );
             writer.Write( Field10 );
-            writer.Write( Field14 );
-            writer.Write( Field18 );
-            writer.Write( Field1C );
+            writer.Write( Static1C );
         }
     }
 }

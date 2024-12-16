@@ -1,4 +1,5 @@
-﻿using EvtTool.IO;
+﻿using System;
+using EvtTool.IO;
 
 namespace EvtTool
 {
@@ -19,7 +20,7 @@ namespace EvtTool
         public short Field20 { get; set; }
         public short Field22 { get; set; }
         public int Field24 { get; set; }
-        public float Field28 { get; set; }
+        public bool Field28 { get; set; }
         public int Field2C { get; set; }
 
         public struct Entry
@@ -50,26 +51,26 @@ namespace EvtTool
             SelectMinorId = reader.ReadByte();
             SelectSubId = reader.ReadByte();
             EvtLocalDataIdSelStorage  = reader.ReadInt32();
+            // 0-5
             Field10 = reader.ReadInt32();
             Field14 = reader.ReadSingle();
             Field18 = reader.ReadSingle();
             Field1C = reader.ReadSingle();
             Field20 = reader.ReadInt16();
             Field22 = reader.ReadInt16();
+            // 0, 3, 7, -65526
             Field24 = reader.ReadInt32();
-            Field28 = reader.ReadSingle();
+            // always 1 or 0
+            Field28 = reader.ReadSingle() == 1;
+            // 0 or -65526
             Field2C = reader.ReadInt32();
 
             int numOfEntries = 14;
-            if (command.DataSize == 0xB0)
-            {
-                numOfEntries = 16;
-            }
-            else numOfEntries = 14;
+            if (command.DataSize == 0xB0) numOfEntries = 16;
 
             for ( int i = 0; i < numOfEntries; i++ )
             {
-                Entries[ i ].Unknown1 = reader.ReadInt16();
+                Entries[i].Unknown1 = reader.ReadInt16();
                 Entries[i].Unknown2 = reader.ReadInt16();
                 Entries[i].Unknown3 = reader.ReadSingle();
             }
@@ -93,7 +94,7 @@ namespace EvtTool
             writer.Write( Field20 );
             writer.Write( Field22 );
             writer.Write( Field24 );
-            writer.Write( Field28 );
+            writer.Write( Field28 == true ? 1 : 0 );
             writer.Write( Field2C );
 
             int numOfEntries = 14;

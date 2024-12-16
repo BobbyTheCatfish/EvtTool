@@ -83,7 +83,7 @@ namespace EvtTool
             Commands = new List<Command>();
         }
 
-        public EvtFile( string path ) : this()
+        public EvtFile( string path) : this()
         {
             using ( var stream = File.OpenRead( path ) )
                 Read( new EndianBinaryReader( stream, Endianness.Big ) );

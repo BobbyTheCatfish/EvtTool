@@ -13,25 +13,31 @@ namespace EvtTool
         public float Field24 { get; set; }
         public int Field28 { get; set; }
         public int Field2C { get; set; }
-        public int Field30 { get; set; }
-        public int Field34 { get; set; }
-        public int Field38 { get; set; }
-        public int Field3C { get; set; }
+        public int Static30 { get; set; } = 0;
+        public int Static34 { get; set; } = 0;
+        public int Static38 { get; set; } = 0;
+        public int Static3C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
             Position = reader.ReadVector3();
             Rotation = reader.ReadVector3();
+            // usually 0-50 but can be huge sometimes
             Field18 = reader.ReadInt32();
+            // 1-10
             Field1C = reader.ReadSingle();
+            // 0, 1, or negative a billion
             Field20 = reader.ReadInt32();
+            // 0-10
             Field24 = reader.ReadSingle();
+            // 0-10 or a huuuge number
             Field28 = reader.ReadInt32();
             Field2C = reader.ReadInt32();
-            Field30 = reader.ReadInt32();
-            Field34 = reader.ReadInt32();
-            Field38 = reader.ReadInt32();
-            Field3C = reader.ReadInt32();
+
+            Static30 = reader.ReadInt32();
+            Static34 = reader.ReadInt32();
+            Static38 = reader.ReadInt32();
+            Static3C = reader.ReadInt32();
         }
 
 
@@ -45,10 +51,10 @@ namespace EvtTool
             writer.Write( Field24 );
             writer.Write( Field28 );
             writer.Write( Field2C );
-            writer.Write( Field30 );
-            writer.Write( Field34 );
-            writer.Write( Field38 );
-            writer.Write( Field3C );
+            writer.Write( Static30 );
+            writer.Write( Static34 );
+            writer.Write( Static38 );
+            writer.Write( Static3C );
         }
     }
 }

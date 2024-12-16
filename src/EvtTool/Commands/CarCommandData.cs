@@ -1,17 +1,20 @@
+using System.ComponentModel;
 using EvtTool.IO;
+using Newtonsoft.Json;
 
 namespace EvtTool
 {
     public sealed class CarCommandData : CommandData
     {
         public int Field00 { get; set; }
-        public int Unused04 { get; set; }
-        public int Unused08 { get; set; }
-        public int Unused0C { get; set; }
+        public int Unused04 { get; set; } = 0;
+        public int Unused08 { get; set; } = 0;
+        public int Unused0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
             Field00 = reader.ReadInt32();
+            // unused
             Unused04 = reader.ReadInt32();
             Unused08 = reader.ReadInt32();
             Unused0C = reader.ReadInt32();

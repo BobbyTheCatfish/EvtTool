@@ -181,13 +181,13 @@
                 case "SsCp":
                     return new SsCpCommandData();
                 case "TCol":
-                    return new ColCommandData();
+                    return new TColCommandData();
                 case "TRgs":
-                    return new RgsCommandData();
+                    return new TRgsCommandData();
                 case "TrMt":
                     return new TrMtCommandData();
                 case "TScl":
-                    return new SclCommandData();
+                    return new TSclCommandData();
 
                 // ECS commands
                 case "SBE_":

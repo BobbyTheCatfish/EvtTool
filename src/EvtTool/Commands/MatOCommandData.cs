@@ -1,52 +1,43 @@
+using System.Numerics;
 using EvtTool.IO;
 
 namespace EvtTool
 {
     public sealed class MatOCommandData : CommandData
     {
-        public int Field00 { get; set; }
-        public int Field04 { get; set; }
-        public float Field08 { get; set; }
-        public float Field0C { get; set; }
-        public float Field10 { get; set; }
-        public float Field14 { get; set; }
-        public float Field18 { get; set; }
-        public float Field1C { get; set; }
-        public int Field20 { get; set; }
-        public int Field24 { get; set; }
-        public int Field28 { get; set; }
-        public int Field2C { get; set; }
+        public int AttachObjectId { get; set; }
+        public Vector3 PositionOffset {  get; set; }
+        public Vector3 RotationOffset { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static20 { get; set; } = 0;
+        public int Static24 { get; set; } = 0;
+        public int Static28 { get; set; } = 0;
+        public int Static2C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
-            Field04 = reader.ReadInt32();
-            Field08 = reader.ReadSingle();
-            Field0C = reader.ReadSingle();
-            Field10 = reader.ReadSingle();
-            Field14 = reader.ReadSingle();
-            Field18 = reader.ReadSingle();
-            Field1C = reader.ReadSingle();
-            Field20 = reader.ReadInt32();
-            Field24 = reader.ReadInt32();
-            Field28 = reader.ReadInt32();
-            Field2C = reader.ReadInt32();
+            Static00 = reader.ReadInt32();
+
+            AttachObjectId = reader.ReadInt32();
+            PositionOffset = reader.ReadVector3();
+            RotationOffset = reader.ReadVector3();
+
+            Static20 = reader.ReadInt32();
+            Static24 = reader.ReadInt32();
+            Static28 = reader.ReadInt32();
+            Static2C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
-            writer.Write( Field04 );
-            writer.Write( Field08 );
-            writer.Write( Field0C );
-            writer.Write( Field10 );
-            writer.Write( Field14 );
-            writer.Write( Field18 );
-            writer.Write( Field1C );
-            writer.Write( Field20 );
-            writer.Write( Field24 );
-            writer.Write( Field28 );
-            writer.Write( Field2C );
+            writer.Write( Static00 );
+            writer.Write( AttachObjectId );
+            writer.Write( PositionOffset );
+            writer.Write( RotationOffset );
+            writer.Write( Static20 );
+            writer.Write( Static24 );
+            writer.Write( Static28 );
+            writer.Write( Static2C );
         }
     }
 }

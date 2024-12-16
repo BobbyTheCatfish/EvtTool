@@ -6,7 +6,6 @@ namespace EvtTool
 {
     public sealed class SndCommandData : CommandData
     {
-        public int Field00 { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public SndMan SoundType { get; set; }
 
@@ -14,8 +13,9 @@ namespace EvtTool
         public SndAction Action { get; set; }
         public int Channel { get; set; }
         public int CueId { get; set; }
-        public int Field14 { get; set; }
         public int FadeoutDuration { get; set; }
+        public int Field00 { get; set; }
+        public int Field14 { get; set; }
         public int Field1C { get; set; }
 
         internal override void Read( Command command, EndianBinaryReader reader )

@@ -1,40 +1,38 @@
+using System.Numerics;
 using EvtTool.IO;
 
 namespace EvtTool
 {
     public sealed class MLwCommandData : CommandData
     {
-        public int Field00 { get; set; }
-        public float Field04 { get; set; }
-        public float Field08 { get; set; }
-        public float Field0C { get; set; }
-        public float Field10 { get; set; }
-        public int Field14 { get; set; }
-        public int Field18 { get; set; }
-        public int Field1C { get; set; }
+        public Vector2 Direction1 { get; set; }
+        public Vector2 Direction2 { get; set; }
+        public int Delay1 { get; set; }
+        public int Delay2 { get; set; }
+        public bool Field00 { get; set; }
+        public int Static1C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
-            Field04 = reader.ReadSingle();
-            Field08 = reader.ReadSingle();
-            Field0C = reader.ReadSingle();
-            Field10 = reader.ReadSingle();
-            Field14 = reader.ReadInt32();
-            Field18 = reader.ReadInt32();
-            Field1C = reader.ReadInt32();
+            Field00 = reader.ReadInt32() == 1;
+            // i'd assume these would be xy rotation pairs
+            Direction1 = reader.ReadVector2();
+            Direction2 = reader.ReadVector2();
+            // time until next look
+            Delay1 = reader.ReadInt32();
+            Delay2 = reader.ReadInt32();
+
+            Static1C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
             writer.Write( Field00 );
-            writer.Write( Field04 );
-            writer.Write( Field08 );
-            writer.Write( Field0C );
-            writer.Write( Field10 );
-            writer.Write( Field14 );
-            writer.Write( Field18 );
-            writer.Write( Field1C );
+            writer.Write( Direction1 );
+            writer.Write( Direction2 );
+            writer.Write( Delay1 );
+            writer.Write( Delay2 );
+            writer.Write( Static1C );
         }
     }
 }

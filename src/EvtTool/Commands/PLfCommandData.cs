@@ -10,7 +10,7 @@ namespace EvtTool
         public float Field0C { get; set; }
         public float Field10 { get; set; }
         public float Field14 { get; set; }
-        public int Field18 { get; set; }
+        public bool Field18 { get; set; }
         public int Field1C { get; set; }
         public int Field20 { get; set; }
         public int Field24 { get; set; }
@@ -19,26 +19,36 @@ namespace EvtTool
         public int Field30 { get; set; }
         public float Field34 { get; set; }
         public float Field38 { get; set; }
-        public int Field3C { get; set; }
+        public int Static3C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
+            // 0-2
             Field00 = reader.ReadInt32();
+            // small to large
             Field04 = reader.ReadSingle();
             Field08 = reader.ReadSingle();
             Field0C = reader.ReadSingle();
+            // has scientific notation
             Field10 = reader.ReadSingle();
+            // 0-2
             Field14 = reader.ReadSingle();
-            Field18 = reader.ReadInt32();
+            Field18 = reader.ReadInt32() == 1;
+            // small or large
             Field1C = reader.ReadInt32();
+            // small
             Field20 = reader.ReadInt32();
             Field24 = reader.ReadInt32();
+            // large
             Field28 = reader.ReadInt32();
             Field2C = reader.ReadInt32();
+            // 0-5 or 272
             Field30 = reader.ReadInt32();
+            // has scientific notation
             Field34 = reader.ReadSingle();
             Field38 = reader.ReadSingle();
-            Field3C = reader.ReadInt32();
+
+            Static3C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
@@ -49,7 +59,7 @@ namespace EvtTool
             writer.Write( Field0C );
             writer.Write( Field10 );
             writer.Write( Field14 );
-            writer.Write( Field18 );
+            writer.Write( Field18 == true ? 1 : 0 );
             writer.Write( Field1C );
             writer.Write( Field20 );
             writer.Write( Field24 );
@@ -58,7 +68,7 @@ namespace EvtTool
             writer.Write( Field30 );
             writer.Write( Field34 );
             writer.Write( Field38 );
-            writer.Write( Field3C );
+            writer.Write( Static3C );
         }
     }
 }

@@ -28,11 +28,14 @@ namespace EvtTool
             Position = reader.ReadVector3();
             Rotation = reader.ReadVector3();
             Fov = reader.ReadSingle();
+            // usually floats
             Field20 = reader.ReadSingle();
             Field24 = reader.ReadSingle();
             Field28 = reader.ReadSingle();
             Field2C = reader.ReadSingle();
+            // 0-5
             Field30 = reader.ReadInt32();
+            // pos or neg ints that are very high or very low
             Field34 = reader.ReadInt32();
             Field38 = reader.ReadSingle();
             Field3C = reader.ReadSingle();

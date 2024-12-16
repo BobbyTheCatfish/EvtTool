@@ -4,18 +4,18 @@ namespace EvtTool
 {
     public sealed class TrMtCommandData : CommandData
     {
-        public int Field00 { get; set; }
+        public int Static00 { get; set; } = 241;
         public int Field04 { get; set; }
         public int Field08 { get; set; }
-        public int Field0C { get; set; }
+        public int Static0C { get; set; } = 0;
         public int Field10 { get; set; }
         public int Field14 { get; set; }
         public int Field18 { get; set; }
         public int Field1C { get; set; }
         public int Field20 { get; set; }
-        public int Field24 { get; set; }
-        public int Field28 { get; set; }
-        public int Field2C { get; set; }
+        public bool Field24 { get; set; }
+        public bool Field28 { get; set; }
+        public bool Field2C { get; set; }
         public int Field30 { get; set; }
         public int Field34 { get; set; }
         public int Field38 { get; set; }
@@ -24,53 +24,69 @@ namespace EvtTool
         public int Field44 { get; set; }
         public int Field48 { get; set; }
         public int Field4C { get; set; }
-        public int Field50 { get; set; }
-        public int Field54 { get; set; }
-        public int Field58 { get; set; }
-        public int Field5C { get; set; }
-        public int Field60 { get; set; }
-        public int Field64 { get; set; }
-        public int Field68 { get; set; }
-        public int Field6C { get; set; }
+        public int Static50 { get; set; } = 0;
+        public int Static54 { get; set; } = 0;
+        public int Static58 { get; set; } = 0;
+        public int Static5C { get; set; } = 0;
+        public int Static60 { get; set; } = 0;
+        public int Static64 { get; set; } = 0;
+        public int Static68 { get; set; } = 0;
+        public int Static6C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
+            Static00 = reader.ReadInt32();
+
+            // small
             Field04 = reader.ReadInt32();
+            // 60 or 120
             Field08 = reader.ReadInt32();
-            Field0C = reader.ReadInt32();
+
+            Static0C = reader.ReadInt32();
+
+            // small
             Field10 = reader.ReadInt32();
             Field14 = reader.ReadInt32();
             Field18 = reader.ReadInt32();
             Field1C = reader.ReadInt32();
+            // 1 or 4
             Field20 = reader.ReadInt32();
-            Field24 = reader.ReadInt32();
-            Field28 = reader.ReadInt32();
-            Field2C = reader.ReadInt32();
+            Field24 = reader.ReadInt32() == 1;
+            Field28 = reader.ReadInt32() == 1;
+            Field2C = reader.ReadInt32() == 1;
+            // 0 or 40081
             Field30 = reader.ReadInt32();
+            // 0 or 7
             Field34 = reader.ReadInt32();
+            // 0 or 3473461
             Field38 = reader.ReadInt32();
+            // 0 or 3866683
             Field3C = reader.ReadInt32();
+            // 0 or 4081
             Field40 = reader.ReadInt32();
+            // 0 or 8
             Field44 = reader.ReadInt32();
+            // 0 or 3538998
             Field48 = reader.ReadInt32();
+            // 0 or 3932220
             Field4C = reader.ReadInt32();
-            Field50 = reader.ReadInt32();
-            Field54 = reader.ReadInt32();
-            Field58 = reader.ReadInt32();
-            Field5C = reader.ReadInt32();
-            Field60 = reader.ReadInt32();
-            Field64 = reader.ReadInt32();
-            Field68 = reader.ReadInt32();
-            Field6C = reader.ReadInt32();
+
+            Static50 = reader.ReadInt32();
+            Static54 = reader.ReadInt32();
+            Static58 = reader.ReadInt32();
+            Static5C = reader.ReadInt32();
+            Static60 = reader.ReadInt32();
+            Static64 = reader.ReadInt32();
+            Static68 = reader.ReadInt32();
+            Static6C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
+            writer.Write( Static00 );
             writer.Write( Field04 );
             writer.Write( Field08 );
-            writer.Write( Field0C );
+            writer.Write( Static0C );
             writer.Write( Field10 );
             writer.Write( Field14 );
             writer.Write( Field18 );
@@ -87,14 +103,14 @@ namespace EvtTool
             writer.Write( Field44 );
             writer.Write( Field48 );
             writer.Write( Field4C );
-            writer.Write( Field50 );
-            writer.Write( Field54 );
-            writer.Write( Field58 );
-            writer.Write( Field5C );
-            writer.Write( Field60 );
-            writer.Write( Field64 );
-            writer.Write( Field68 );
-            writer.Write( Field6C );
+            writer.Write( Static50 );
+            writer.Write( Static54 );
+            writer.Write( Static58 );
+            writer.Write( Static5C );
+            writer.Write( Static60 );
+            writer.Write( Static64 );
+            writer.Write( Static68 );
+            writer.Write( Static6C );
         }
     }
 }

@@ -1,11 +1,13 @@
+using System.ComponentModel;
 using EvtTool.IO;
+using Newtonsoft.Json;
 
 namespace EvtTool
 {
     public sealed class CsaCommandData : CommandData
     {
         public int SomeCameraBitfield { get; set; }
-        public int CameraObjectID { get; set; }
+        public int CameraObjectId { get; set; }
         public int CameraAnimation { get; set; }
         public float CameraSpeed { get; set; }
         public int Field10 { get; set; }
@@ -15,7 +17,7 @@ namespace EvtTool
         public float Field20 { get; set; }
         public float Field24 { get; set; }
         public float Field28 { get; set; }
-        public int Field2C { get; set; }
+        public int Static2C { get; set; } = 0;
         public float Field30 { get; set; }
         public float Field34 { get; set; }
         public float Field38 { get; set; }
@@ -25,42 +27,53 @@ namespace EvtTool
         public float Field48 { get; set; }
         public float Field4C { get; set; }
         public int Field50 { get; set; }
-        public int Field54 { get; set; }
-        public int Field58 { get; set; }
-        public int Field5C { get; set; }
+        public int Static54 { get; set; } = 0;
+        public int Static58 { get; set; } = 0;
+        public int Static5C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
             SomeCameraBitfield = reader.ReadInt32();
-            CameraObjectID = reader.ReadInt32();
+            CameraObjectId = reader.ReadInt32();
             CameraAnimation = reader.ReadInt32();
             CameraSpeed = reader.ReadSingle();
+            // int 0-60
             Field10 = reader.ReadInt32();
+            // pos or neg int or float. vector?
             Field14 = reader.ReadSingle();
             Field18 = reader.ReadSingle();
             Field1C = reader.ReadSingle();
             Field20 = reader.ReadSingle();
             Field24 = reader.ReadSingle();
             Field28 = reader.ReadSingle();
-            Field2C = reader.ReadInt32();
+            // always 0
+            Static2C = reader.ReadInt32();
+            // pos or neg int or float. vector?
             Field30 = reader.ReadSingle();
             Field34 = reader.ReadSingle();
             Field38 = reader.ReadSingle();
+            // float
             Field3C = reader.ReadSingle();
+            // enum 0-4
             Field40 = reader.ReadInt32();
+            // 4 or 5
             Field44 = reader.ReadInt32();
+            // 375 or 565
             Field48 = reader.ReadSingle();
+            // pos or neg int, usually very high or very very low
             Field4C = reader.ReadSingle();
+            // large int
             Field50 = reader.ReadInt32();
-            Field54 = reader.ReadInt32();
-            Field58 = reader.ReadInt32();
-            Field5C = reader.ReadInt32();
+            // always 0
+            Static54 = reader.ReadInt32();
+            Static58 = reader.ReadInt32();
+            Static5C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
             writer.Write( SomeCameraBitfield );
-            writer.Write(CameraObjectID);
+            writer.Write(CameraObjectId);
             writer.Write(CameraAnimation);
             writer.Write(CameraSpeed);
             writer.Write( Field10 );
@@ -70,7 +83,7 @@ namespace EvtTool
             writer.Write( Field20 );
             writer.Write( Field24 );
             writer.Write( Field28 );
-            writer.Write( Field2C );
+            writer.Write( Static2C );
             writer.Write( Field30 );
             writer.Write( Field34 );
             writer.Write( Field38 );
@@ -80,9 +93,9 @@ namespace EvtTool
             writer.Write( Field48 );
             writer.Write( Field4C );
             writer.Write( Field50 );
-            writer.Write( Field54 );
-            writer.Write( Field58 );
-            writer.Write( Field5C );
+            writer.Write( Static54 );
+            writer.Write( Static58 );
+            writer.Write( Static5C );
         }
     }
 }

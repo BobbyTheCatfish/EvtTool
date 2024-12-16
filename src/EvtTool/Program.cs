@@ -40,40 +40,62 @@ namespace EvtTool
             //}
             //return;
 
-            if ( args.Length == 0 )
+
+            string path = null;
+            var outputToConsole = false;
+            bool reduced = true;
+            var filesettings = StringComparison.InvariantCultureIgnoreCase;
+
+            foreach ( var arg in args )
+            {
+                if ( arg == "--no-output" )
+                {
+                    outputToConsole = true;
+                }
+                else if (arg == "--full")
+                {
+                    reduced = false;
+                }
+                else if ( path == null )
+                {
+                    path = arg;
+                }
+            }
+            if ( path == null )
             {
                 Console.WriteLine( "EvtTool 1.4 by TGE\n" +
                                    "\n" +
                                    "Usage:\n" +
                                    "EvtTool <file path>\n" +
-                                   "Drag .EVT, .ECS or .lsd file onto the program to convert to JSON, drag JSON file to convert back.\n" );
+                                   "Drag .EVT, .ECS or .lsd file onto the program to convert to JSON, drag JSON file to convert back.\n\n" +
+                                   "Flags:\n" +
+                                   "--no-output     Prints the output to the console instead of creating a file\n" +
+                                   "--full          Includes unused and static values in command data");
                 return;
             }
-
-            var path = args[0];
             if ( !File.Exists( path ) )
             {
                 Console.WriteLine( "Specified file doesn't exist." );
                 return;
             }
 
-            if ( path.EndsWith( "json", StringComparison.InvariantCultureIgnoreCase ) )
+            if ( path.EndsWith( "json", filesettings ) )
             {
                 var json = File.ReadAllText( path );
                 ISaveable file;
-                var settings = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error };
+                var settings = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error, NullValueHandling = NullValueHandling.Include, DefaultValueHandling = DefaultValueHandling.Populate };
 
                 try
                 {
-                    if ( path.EndsWith( ".EVT.json", StringComparison.InvariantCultureIgnoreCase ) )
+                    if ( path.EndsWith( ".EVT.json", filesettings ) )
                     {
                         file = JsonConvert.DeserializeObject<EvtFile>( json, settings );
                     }
-                    else if ( path.EndsWith( ".ECS.json", StringComparison.InvariantCultureIgnoreCase ) )
+                    else if ( path.EndsWith( ".ECS.json", filesettings ) )
                     {
                         file = JsonConvert.DeserializeObject<EcsFile>( json, settings );
                     }
-                    else if ( path.EndsWith( ".lsd.json", StringComparison.InvariantCultureIgnoreCase ) )
+                    else if ( path.EndsWith( ".lsd.json", filesettings ) )
                     {
                         file = new LsdFile( JsonConvert.DeserializeObject<List<LsdList>>( json, settings ) );
                     }
@@ -89,27 +111,37 @@ namespace EvtTool
                     Console.WriteLine( "Error occured while deserializing JSON. The JSON provided is either corrupt or incompatible." );
                     return;
                 }
-
+                if ( outputToConsole == true )
+                {
+                    Console.WriteLine( file.ToString() );
+;                   return;
+                }
                 file.Save( Path.ChangeExtension( path, null ) );
             }
             else
             {
                 var extension = "EVT.json";
                 object obj;
+                var settings = new JsonSerializerSettings
+                {
+                    MissingMemberHandling = MissingMemberHandling.Error,
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = reduced ? NullValueHandling.Ignore : NullValueHandling.Include,
+                    DefaultValueHandling = reduced ? DefaultValueHandling.Ignore : DefaultValueHandling.Populate
+                };
 
-                if ( path.EndsWith( "evt", StringComparison.InvariantCultureIgnoreCase ) )
+                if ( path.EndsWith( "evt", filesettings ) )
                 {
                     obj = new EvtFile( path );
                 }
-                else if ( path.EndsWith( "ecs", StringComparison.InvariantCultureIgnoreCase ) )
+                else if ( path.EndsWith( "ecs", filesettings) )
                 {
                     obj = new EcsFile( path );
                     extension = "ECS.json";
                 }
-                else if ( path.EndsWith( "lsd", StringComparison.InvariantCultureIgnoreCase ) )
+                else if ( path.EndsWith( "lsd", filesettings ) )
                 {
-                    var lsd = new LsdFile( path );
-                    obj = lsd.Lists;
+                    obj = new LsdFile( path ).Lists;
                     extension = "lsd.json";
                 }
                 else
@@ -118,7 +150,12 @@ namespace EvtTool
                     return;
                 }
 
-                var json = JsonConvert.SerializeObject( obj, Formatting.Indented );
+                var json = JsonConvert.SerializeObject( obj, settings );
+                if ( outputToConsole == true )
+                {
+                    Console.WriteLine( json );
+                    return;
+                }
                 File.WriteAllText( Path.ChangeExtension( path, extension ), json );
             }
         }

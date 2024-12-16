@@ -1,40 +1,34 @@
+using System.ComponentModel;
+using System.Numerics;
 using EvtTool.IO;
+using Newtonsoft.Json;
 
 namespace EvtTool
 {
     public sealed class EsdCommandData : CommandData
     {
-        public int Field00 { get; set; }
-        public float Field04 { get; set; }
-        public float Field08 { get; set; }
-        public float Field0C { get; set; }
-        public float Field10 { get; set; }
-        public float Field14 { get; set; }
-        public float Field18 { get; set; }
-        public int Field1C { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Rotation { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static1C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
-            Field04 = reader.ReadSingle();
-            Field08 = reader.ReadSingle();
-            Field0C = reader.ReadSingle();
-            Field10 = reader.ReadSingle();
-            Field14 = reader.ReadSingle();
-            Field18 = reader.ReadSingle();
-            Field1C = reader.ReadInt32();
+            Static00 = reader.ReadInt32();
+            
+            // these might be mixed up, no firm way to tell but this seems logical in my mind for position to go first for some reason
+            Position = reader.ReadVector3();
+            Rotation = reader.ReadVector3();
+
+            Static1C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
-            writer.Write( Field04 );
-            writer.Write( Field08 );
-            writer.Write( Field0C );
-            writer.Write( Field10 );
-            writer.Write( Field14 );
-            writer.Write( Field18 );
-            writer.Write( Field1C );
+            writer.Write( Static00 );
+            writer.Write( Position );
+            writer.Write( Rotation );
+            writer.Write( Static1C );
         }
     }
 }

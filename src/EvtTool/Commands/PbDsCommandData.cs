@@ -1,76 +1,89 @@
+using System.Numerics;
 using EvtTool.IO;
 
 namespace EvtTool
 {
     public sealed class PbDsCommandData : CommandData
     {
-        public int Field00 { get; set; }
+        public Vector2 Shift1 { get; set; }
+        public Vector2 Shift2 { get; set; }
+        public int Static00 { get; set; } = 0;
         public int Field04 { get; set; }
-        public int Field08 { get; set; }
-        public int Field0C { get; set; }
+        public int Static08 { get; set; } = 4354;
+        public int Static0C { get; set; } = 4354;
         public float Field10 { get; set; }
-        public float Field14 { get; set; }
-        public float Field18 { get; set; }
-        public int Field1C { get; set; }
+        public int Static1C { get; set; } = 0;
         public float Field20 { get; set; }
-        public float Field24 { get; set; }
-        public float Field28 { get; set; }
-        public int Field2C { get; set; }
+        public int Static2C { get; set; } = 0;
         public int Field30 { get; set; }
         public int Field34 { get; set; }
-        public int Field38 { get; set; }
+        public int Static38 { get; set; } = 0;
         public int Field3C { get; set; }
-        public int Field40 { get; set; }
-        public int Field44 { get; set; }
-        public int Field48 { get; set; }
-        public int Field4C { get; set; }
+        public int Static40 { get; set; } = 4354;
+        public int Static44 { get; set; } = 0;
+        public int Static48 { get; set; } = 0;
+        public int Static4C { get; set; } = 0;
 
-        internal override void Read( Command command, EndianBinaryReader reader )
+        internal override void Read(Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
+            Static00 = reader.ReadInt32();
+
+            // large number
             Field04 = reader.ReadInt32();
-            Field08 = reader.ReadInt32();
-            Field0C = reader.ReadInt32();
+
+            Static08 = reader.ReadInt32();
+            Static0C = reader.ReadInt32();
+
+            // small number
             Field10 = reader.ReadSingle();
-            Field14 = reader.ReadSingle();
-            Field18 = reader.ReadSingle();
-            Field1C = reader.ReadInt32();
+            // -1 - 1. probably controls
+            Shift1 = reader.ReadVector2();
+
+            Static1C = reader.ReadInt32();
+
+            // small number
             Field20 = reader.ReadSingle();
-            Field24 = reader.ReadSingle();
-            Field28 = reader.ReadSingle();
-            Field2C = reader.ReadInt32();
+            // -1 - 1. probably controls
+            Shift2 = reader.ReadVector2();
+
+            Static2C = reader.ReadInt32();
+
+            // 0-5
             Field30 = reader.ReadInt32();
+            // pos or neg (usually neg), large
             Field34 = reader.ReadInt32();
-            Field38 = reader.ReadInt32();
+
+            Static38 = reader.ReadInt32();
+
+            // small number
             Field3C = reader.ReadInt32();
-            Field40 = reader.ReadInt32();
-            Field44 = reader.ReadInt32();
-            Field48 = reader.ReadInt32();
-            Field4C = reader.ReadInt32();
+            
+            Static40 = reader.ReadInt32();
+            Static44 = reader.ReadInt32();
+            Static48 = reader.ReadInt32();
+            Static4C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
+            writer.Write( Static00 );
             writer.Write( Field04 );
-            writer.Write( Field08 );
-            writer.Write( Field0C );
+            writer.Write( Static08 );
+            writer.Write( Static0C );
             writer.Write( Field10 );
-            writer.Write( Field14 );
-            writer.Write( Field18 );
-            writer.Write( Field1C );
+            writer.Write( Shift1 );
+            writer.Write( Static1C );
             writer.Write( Field20 );
-            writer.Write( Field24 );
-            writer.Write( Field28 );
-            writer.Write( Field2C );
+            writer.Write( Shift2 );
+            writer.Write( Static2C );
             writer.Write( Field30 );
             writer.Write( Field34 );
-            writer.Write( Field38 );
+            writer.Write( Static38 );
             writer.Write( Field3C );
-            writer.Write( Field40 );
-            writer.Write( Field44 );
-            writer.Write( Field48 );
-            writer.Write( Field4C );
+            writer.Write( Static40 );
+            writer.Write( Static44 );
+            writer.Write( Static48 );
+            writer.Write( Static4C );
         }
     }
 }

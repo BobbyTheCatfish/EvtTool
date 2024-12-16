@@ -8,10 +8,10 @@ namespace EvtTool
     /// </summary>
     public class MLaCommandData : CommandData
     {
+        public Vector3 Position { get; set; }
         public int Field00 { get; set; }
         public int Field04 { get; set; }
         public int Field08 { get; set; }
-        public Vector3 Target { get; set; }
         public int Field18 { get; set; }
         public int Field1C { get; set; }
 
@@ -20,7 +20,8 @@ namespace EvtTool
             Field00 = reader.ReadInt32();
             Field04 = reader.ReadInt32();
             Field08 = reader.ReadInt32();
-            Target = reader.ReadVector3();
+            Position = reader.ReadVector3();
+            // 0-18
             Field18 = reader.ReadInt32();
             Field1C = reader.ReadInt32();
         }
@@ -31,7 +32,7 @@ namespace EvtTool
             writer.Write( Field00 );
             writer.Write( Field04 );
             writer.Write( Field08 );
-            writer.Write( Target );
+            writer.Write( Position );
             writer.Write( Field18 );
             writer.Write( Field1C );
         }

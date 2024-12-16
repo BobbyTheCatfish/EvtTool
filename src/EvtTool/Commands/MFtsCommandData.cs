@@ -6,8 +6,8 @@ namespace EvtTool
     {
         public FootstepDistortion FootstepDistortionBitfield { get; set; }
         public float FootstepDistortionStrength { get; set; }
-        public int Field08 { get; set; }
-        public int Field0C { get; set; }
+        public int Static08 { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
@@ -16,16 +16,17 @@ namespace EvtTool
                 data = reader.ReadInt32()
             };
             FootstepDistortionStrength = reader.ReadSingle();
-            Field08 = reader.ReadInt32();
-            Field0C = reader.ReadInt32();
+
+            Static08 = reader.ReadInt32();
+            Static0C = reader.ReadInt32();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
             writer.Write( FootstepDistortionBitfield.data );
             writer.Write( FootstepDistortionStrength );
-            writer.Write( Field08 );
-            writer.Write( Field0C );
+            writer.Write( Static08 );
+            writer.Write( Static0C );
         }
 
         public class FootstepDistortion

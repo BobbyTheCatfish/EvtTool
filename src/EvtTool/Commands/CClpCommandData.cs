@@ -1,13 +1,15 @@
+using System.ComponentModel;
 using EvtTool.IO;
+using Newtonsoft.Json;
 
 namespace EvtTool
 {
     public sealed class CClpCommandData : CommandData
     {
-        public int Unused00 { get; set; }
-        public int Unused04 { get; set; }
         public float NearClip { get; set; }
         public float FarClip { get; set; }
+        public int Unused00 { get; set; } = 0;
+        public int Unused04 { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
