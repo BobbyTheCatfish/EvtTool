@@ -4,8 +4,8 @@ namespace EvtTool
 {
     public sealed class FgFlCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         public int Field04 { get; set; }
+        public int Static00 { get; set; } = 0;
         public int Static08 { get; set; } = 0;
         public int Static0C { get; set; } = 0;
 

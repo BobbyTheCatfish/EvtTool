@@ -6,10 +6,7 @@ namespace EvtTool
 {
     internal class FsCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         public bool Field04 { get; set; }
-        public int Static08 { get; set; } = 0;
-        public int Static0C { get; set; } = 0;
         public int Field10 { get; set; }
         public int Field14 { get; set; }
         public float Field18 { get; set; }
@@ -17,6 +14,9 @@ namespace EvtTool
         public int Field20 { get; set; }
         public int Field24 { get; set; }
         public int Field28 { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static08 { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
         public int Static2C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )

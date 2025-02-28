@@ -13,6 +13,7 @@ namespace EvtTool
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
+            // might be the asset ID
             Field00 = reader.ReadInt32();
             // unused
             Unused04 = reader.ReadInt32();

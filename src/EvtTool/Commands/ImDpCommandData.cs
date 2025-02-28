@@ -6,8 +6,7 @@ namespace EvtTool
 {
     public sealed class ImDpCommandData : CommandData
     {
-        [JsonConverter(typeof(StringEnumConverter))]
-        public imageShowMode ImageShowMode { get; set; }
+        public bool Show { get; set; }
         public bool PlayAnim { get; set; }
         public short PictId { get; set; }
         public short FrameId { get; set; }
@@ -19,7 +18,7 @@ namespace EvtTool
         {
             Static00 = reader.ReadInt32();
 
-            ImageShowMode = (imageShowMode)reader.ReadByte();
+            Show = reader.ReadBoolean();
             PlayAnim = reader.ReadBoolean();
             PictId = reader.ReadInt16();
             // is always 0 or 1.
@@ -32,18 +31,12 @@ namespace EvtTool
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
             writer.Write( Static00 );
-            writer.Write((byte)ImageShowMode);
+            writer.Write(Show);
             writer.Write(PlayAnim);
             writer.Write(PictId);
             writer.Write(FrameId);
             writer.Write(Static0A);
             writer.Write( Static0C );
-        }
-
-        public enum imageShowMode
-        {
-            Show = 1,
-            Hide = 2
         }
     }
 }

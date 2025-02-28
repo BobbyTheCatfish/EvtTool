@@ -1,72 +1,81 @@
-﻿using EvtTool.IO;
+﻿using System.Runtime.Remoting.Messaging;
+using EvtTool.IO;
 
 namespace EvtTool
 {
     internal class MabCommandData : CommandData
     {
-        public int AnimationID { get; set; }
-        public bool Loop { get; set; }
-        public float AnimationSpeed { get; set; }
-        public int Field04 { get; set; }
-        public int Field10 { get; set; }
-        public int Field14 { get; set; }
-        public bool Field18 { get; set; }
-        public float Field1C { get; set; }
-        public byte Field20 { get; set; }
-        public byte Field21 { get; set; }
-        public short Field22 { get; set; }
-        public int Field24 { get; set; }
-        public int Field28 { get; set; }
-        public int Field2C { get; set; }
-        public int Field30 { get; set; }
-        public int Field34 { get; set; }
+        public class UnkAnimation : Animation { 
+            public short UnkFrames { get; set; }
+        }
+        
+        public int Flags { get; set; }
+        public int StartWaitingFrames { get; set; }
+        public UnkAnimation Animation1 { get; set; }
+        public UnkAnimation Animation2 { get; set; }
         public int Static38 { get; set; } = 0;
-        public int Static3C { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            AnimationID = reader.ReadInt32();
-            Field04 = reader.ReadInt32();
-            Loop = reader.ReadInt32() == 1;
-            AnimationSpeed = reader.ReadSingle();
-            Field10 = reader.ReadInt32();
-            Field14 = reader.ReadInt32();
-            Field18 = reader.ReadInt32() == 1;
-            Field1C = reader.ReadSingle();
-            Field20 = reader.ReadByte();
-            Field21 = reader.ReadByte();
-            Field22 = reader.ReadInt16();
-            Field24 = reader.ReadInt32();
-            Field28 = reader.ReadInt32();
-            Field2C = reader.ReadInt32();
-            Field30 = reader.ReadInt32();
-            Field34 = reader.ReadInt32();
+            Animation1 = new UnkAnimation()
+            {
+                ID = reader.ReadInt32(),
+                UnkFrames = reader.ReadInt16(),
+                InterpolatedFrames = reader.ReadInt16(),
+                Loop = reader.ReadInt32() == 1,
+                Speed = reader.ReadSingle()
+            };
+
+            Animation2 = new UnkAnimation()
+            {
+                ID = reader.ReadInt32(),
+                UnkFrames = reader.ReadInt16(),
+                InterpolatedFrames = reader.ReadInt16(),
+                Loop = reader.ReadInt32() == 1,
+                Speed = reader.ReadSingle()
+            };
+
+            Flags = reader.ReadInt32();
+            
+            Animation1.StartingFrame = reader.ReadInt32();
+            Animation1.EndingFrame = reader.ReadInt32();
+
+            Animation2.StartingFrame = reader.ReadInt32();
+            Animation2.EndingFrame = reader.ReadInt32();
+
+            StartWaitingFrames = reader.ReadInt32();
 
             Static38 = reader.ReadInt32();
-            Static3C = reader.ReadInt32();
+            Static0C = reader.ReadInt32();
         }
 
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write(AnimationID);
-            writer.Write( Field04 );
-            writer.Write( Loop == true ? 1 : 0 );
-            writer.Write(AnimationSpeed);
-            writer.Write( Field10 );
-            writer.Write( Field14 );
-            writer.Write( Field18 == true ? 1 : 0 );
-            writer.Write( Field1C );
-            writer.Write( Field20 );
-            writer.Write( Field21 );
-            writer.Write( Field22 );
-            writer.Write( Field24 );
-            writer.Write( Field28 );
-            writer.Write( Field2C );
-            writer.Write( Field30 );
-            writer.Write( Field34 );
-            writer.Write( Static38 );
-            writer.Write( Static3C );
+            writer.Write(Animation1.ID);
+            writer.Write(Animation1.UnkFrames);
+            writer.Write(Animation1.InterpolatedFrames);
+            writer.Write(Animation1.Loop == true ? 1 : 0);
+            writer.Write(Animation1.Speed);
+
+            writer.Write(Animation2.ID);
+            writer.Write(Animation2.UnkFrames);
+            writer.Write(Animation2.InterpolatedFrames);
+            writer.Write(Animation2.Loop == true ? 1 : 0);
+            writer.Write(Animation2.Speed);
+
+            writer.Write(Flags);
+
+            writer.Write(Animation1.StartingFrame);
+            writer.Write(Animation1.EndingFrame);
+
+            writer.Write(Animation2.StartingFrame);
+            writer.Write(Animation2.EndingFrame);
+
+            writer.Write(StartWaitingFrames);
+            writer.Write(Static38);
+            writer.Write(Static0C);
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EvtTool.IO
 {
-    public static class ColorConvert
+    public static class Utils
     {
         public static byte[] ToBytes(string input) {
             if (input.StartsWith("#"))
@@ -23,5 +19,16 @@ namespace EvtTool.IO
         {
             return $"#{B[0]:X2}{B[1]:X2}{B[2]:X2}{B[3]:X2}";
         }
+    }
+    public class Animation
+    {
+        public int ID { get; set; }
+        public int InterpolatedFrames { get; set; }
+        public bool Loop { get; set; }
+        public float Speed { get; set; }
+        public int StartingFrame { get; set; }
+        public int EndingFrame { get; set; }
+        public int Static1 { get; set; }
+        public int Static2 { get; set; }
     }
 }

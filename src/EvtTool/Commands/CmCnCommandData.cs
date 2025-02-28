@@ -31,7 +31,7 @@ namespace EvtTool
 
         public enum DirectionEnum
         {
-            Other = 0,
+            None = 0,
             Forward = 1,
             Backward = 2,
             Left = 3,

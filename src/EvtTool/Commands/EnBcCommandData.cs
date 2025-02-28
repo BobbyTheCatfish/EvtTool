@@ -14,7 +14,7 @@ namespace EvtTool
             Static00 = reader.ReadInt32();
             Static04 = reader.ReadInt32();
             Static08 = reader.ReadInt32();
-            Color = ColorConvert.ToHexString(reader.ReadBytes(4));
+            Color = reader.ReadColor();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
@@ -22,7 +22,7 @@ namespace EvtTool
             writer.Write( Static00 );
             writer.Write( Static04 );
             writer.Write( Static08 );
-            writer.Write( ColorConvert.ToBytes( Color ) );
+            writer.WriteColor(Color);
         }
     }
 }

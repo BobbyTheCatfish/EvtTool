@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections;
+using System.Numerics;
 using EvtTool.IO;
 
 namespace EvtTool
@@ -6,6 +8,7 @@ namespace EvtTool
     public class CsdCommandData : CommandData
     {
         public int SomeCameraBitfield { get; set; }
+        public BitArray Bitfield { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; } // in degrees
         public float Fov { get; set; }
@@ -22,13 +25,14 @@ namespace EvtTool
         public int Field48 { get; set; }
         public int Field4C { get; set; }
 
-        internal override void Read( Command command, EndianBinaryReader reader )
+        internal override void Read(Command command, EndianBinaryReader reader)
         {
             SomeCameraBitfield = reader.ReadInt32();
+            Bitfield = new BitArray(BitConverter.GetBytes(SomeCameraBitfield));
             Position = reader.ReadVector3();
             Rotation = reader.ReadVector3();
             Fov = reader.ReadSingle();
-            // usually floats
+
             Field20 = reader.ReadSingle();
             Field24 = reader.ReadSingle();
             Field28 = reader.ReadSingle();
@@ -45,24 +49,24 @@ namespace EvtTool
             Field4C = reader.ReadInt32();
         }
 
-        internal override void Write( Command command, EndianBinaryWriter writer )
+        internal override void Write(Command command, EndianBinaryWriter writer)
         {
-            writer.Write( SomeCameraBitfield );
-            writer.Write( Position );
-            writer.Write( Rotation );
-            writer.Write( Fov );
-            writer.Write( Field20 );
-            writer.Write( Field24 );
-            writer.Write( Field28 );
-            writer.Write( Field2C );
-            writer.Write( Field30 );
-            writer.Write( Field34 );
-            writer.Write( Field38 );
-            writer.Write( Field3C );
-            writer.Write( Field40 );
-            writer.Write( Field44 );
-            writer.Write( Field48 );
-            writer.Write( Field4C );
+            writer.Write(SomeCameraBitfield);
+            writer.Write(Position);
+            writer.Write(Rotation);
+            writer.Write(Fov);
+            writer.Write(Field20);
+            writer.Write(Field24);
+            writer.Write(Field28);
+            writer.Write(Field2C);
+            writer.Write(Field30);
+            writer.Write(Field34);
+            writer.Write(Field38);
+            writer.Write(Field3C);
+            writer.Write(Field40);
+            writer.Write(Field44);
+            writer.Write(Field48);
+            writer.Write(Field4C);
         }
     }
 }

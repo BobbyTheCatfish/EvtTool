@@ -6,10 +6,10 @@ namespace EvtTool
 {
     public sealed class CsaCommandData : CommandData
     {
-        public int SomeCameraBitfield { get; set; }
-        public int CameraObjectId { get; set; }
+        public int ParticlePakId { get; set; }
         public int CameraAnimation { get; set; }
         public float CameraSpeed { get; set; }
+        public int SomeCameraBitfield { get; set; }
         public int Field10 { get; set; }
         public float Field14 { get; set; }
         public float Field18 { get; set; }
@@ -17,7 +17,6 @@ namespace EvtTool
         public float Field20 { get; set; }
         public float Field24 { get; set; }
         public float Field28 { get; set; }
-        public int Static2C { get; set; } = 0;
         public float Field30 { get; set; }
         public float Field34 { get; set; }
         public float Field38 { get; set; }
@@ -27,6 +26,7 @@ namespace EvtTool
         public float Field48 { get; set; }
         public float Field4C { get; set; }
         public int Field50 { get; set; }
+        public int Static2C { get; set; } = 0;
         public int Static54 { get; set; } = 0;
         public int Static58 { get; set; } = 0;
         public int Static5C { get; set; } = 0;
@@ -34,7 +34,7 @@ namespace EvtTool
         internal override void Read( Command command, EndianBinaryReader reader )
         {
             SomeCameraBitfield = reader.ReadInt32();
-            CameraObjectId = reader.ReadInt32();
+            ParticlePakId = reader.ReadInt32();
             CameraAnimation = reader.ReadInt32();
             CameraSpeed = reader.ReadSingle();
             // int 0-60
@@ -64,6 +64,7 @@ namespace EvtTool
             Field4C = reader.ReadSingle();
             // large int
             Field50 = reader.ReadInt32();
+
             // always 0
             Static54 = reader.ReadInt32();
             Static58 = reader.ReadInt32();
@@ -73,7 +74,7 @@ namespace EvtTool
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
             writer.Write( SomeCameraBitfield );
-            writer.Write(CameraObjectId);
+            writer.Write(ParticlePakId);
             writer.Write(CameraAnimation);
             writer.Write(CameraSpeed);
             writer.Write( Field10 );

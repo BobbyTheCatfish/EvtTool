@@ -4,10 +4,10 @@ namespace EvtTool
 {
     public class GgGgCommandData : CommandData
     {
-        public int Unused00 { get; set; } = 0;
         public int Field04 { get; set; }
-        public short Static08 { get; set; } = 0;
         public short Field0A { get; set; }
+        public int Unused00 { get; set; } = 0;
+        public short Static08 { get; set; } = 0;
         public int Unused0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )

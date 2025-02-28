@@ -4,10 +4,8 @@ namespace EvtTool
 {
     public sealed class TrMtCommandData : CommandData
     {
-        public int Static00 { get; set; } = 241;
         public int Field04 { get; set; }
         public int Field08 { get; set; }
-        public int Static0C { get; set; } = 0;
         public int Field10 { get; set; }
         public int Field14 { get; set; }
         public int Field18 { get; set; }
@@ -24,6 +22,8 @@ namespace EvtTool
         public int Field44 { get; set; }
         public int Field48 { get; set; }
         public int Field4C { get; set; }
+        public int Static00 { get; set; } = 241;
+        public int Static0C { get; set; } = 0;
         public int Static50 { get; set; } = 0;
         public int Static54 { get; set; } = 0;
         public int Static58 { get; set; } = 0;

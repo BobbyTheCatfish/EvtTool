@@ -7,11 +7,11 @@ namespace EvtTool
 {
     public sealed class EnFhCommandData : CommandData
     {
+        public Vector3 Position { get; set; }
         public int Static00 { get; set; } = 1;
         public int Static04 { get; set; } = 4354;
         public int Static08 { get; set; } = 0;
         public int Static0C { get; set; } = 0;
-        public Vector3 Field10 { get; set; }
         public int Static1C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
@@ -21,7 +21,7 @@ namespace EvtTool
             Static08 = reader.ReadInt32();
             Static0C = reader.ReadInt32();
             // might be a vector? if not it's 3 singles.
-            Field10 = reader.ReadVector3();
+            Position = reader.ReadVector3();
             Static1C = reader.ReadInt32();
         }
 
@@ -31,7 +31,7 @@ namespace EvtTool
             writer.Write( Static04 );
             writer.Write( Static08 );
             writer.Write( Static0C );
-            writer.Write( Field10 );
+            writer.Write( Position );
             writer.Write( Static1C );
         }
     }

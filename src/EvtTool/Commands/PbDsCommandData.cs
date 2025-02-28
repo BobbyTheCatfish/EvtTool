@@ -7,18 +7,18 @@ namespace EvtTool
     {
         public Vector2 Shift1 { get; set; }
         public Vector2 Shift2 { get; set; }
-        public int Static00 { get; set; } = 0;
         public int Field04 { get; set; }
-        public int Static08 { get; set; } = 4354;
-        public int Static0C { get; set; } = 4354;
         public float Field10 { get; set; }
-        public int Static1C { get; set; } = 0;
         public float Field20 { get; set; }
-        public int Static2C { get; set; } = 0;
         public int Field30 { get; set; }
         public int Field34 { get; set; }
-        public int Static38 { get; set; } = 0;
         public int Field3C { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static08 { get; set; } = 4354;
+        public int Static0C { get; set; } = 4354;
+        public int Static1C { get; set; } = 0;
+        public int Static2C { get; set; } = 0;
+        public int Static38 { get; set; } = 0;
         public int Static40 { get; set; } = 4354;
         public int Static44 { get; set; } = 0;
         public int Static48 { get; set; } = 0;

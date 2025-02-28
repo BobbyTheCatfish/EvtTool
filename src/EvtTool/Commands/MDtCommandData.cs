@@ -5,7 +5,7 @@ namespace EvtTool
 {
     public sealed class MDtCommandData : CommandData
     {
-        public int DetachFrame { get; set; }
+        public int Flags { get; set; }
         public int DetachObjectId { get; set; }
         public int HelperBoneId { get; set; }
         public Vector3 PlacementPosition { get; set; }
@@ -16,7 +16,7 @@ namespace EvtTool
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            DetachFrame = reader.ReadInt32();
+            Flags = reader.ReadInt32(); // also might be attachment frame
             HelperBoneId = reader.ReadInt32();
             DetachObjectId = reader.ReadInt32();
 
@@ -31,7 +31,7 @@ namespace EvtTool
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( DetachFrame );
+            writer.Write( Flags );
             writer.Write( HelperBoneId );
             writer.Write( DetachObjectId );
             writer.Write( Static0C );

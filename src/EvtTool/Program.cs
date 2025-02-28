@@ -43,7 +43,7 @@ namespace EvtTool
 
             string path = null;
             var outputToConsole = false;
-            bool reduced = true;
+            bool reduced = false;
             var filesettings = StringComparison.InvariantCultureIgnoreCase;
 
             foreach ( var arg in args )
@@ -106,8 +106,9 @@ namespace EvtTool
                         return;
                     }
                 }
-                catch ( Exception )
+                catch ( Exception err )
                 {
+                    Console.WriteLine(err);
                     Console.WriteLine( "Error occured while deserializing JSON. The JSON provided is either corrupt or incompatible." );
                     return;
                 }

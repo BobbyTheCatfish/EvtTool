@@ -4,16 +4,16 @@ namespace EvtTool
 {
     public sealed class PbRdCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         public int Field04 { get; set; }
-        public int Static08 { get; set; } = 4354;
-        public int Static0C { get; set; } = 4354;
         public float Field10 { get; set; }
         public float Field14 { get; set; }
         public float Field18 { get; set; }
         public float Field1C { get; set; }
         public int Field20 { get; set; }
         public int Field24 { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static08 { get; set; } = 4354;
+        public int Static0C { get; set; } = 4354;
         public int Static28 { get; set; } = 0;
         public int Static2C { get; set; } = 0;
 

@@ -6,16 +6,16 @@ namespace EvtTool
 {
     public sealed class EnShCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
-        public int Static04 { get; set; } = 4354;
-        public int Static08 { get; set; } = 0;
-        public int Static0C { get; set; } = 0;
         public int Field10 { get; set; }
         public float Field14 { get; set; }
         public float Field18 { get; set; }
         public float Field1C { get; set; }
         public float Field20 { get; set; }
         public float Field24 { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static04 { get; set; } = 4354;
+        public int Static08 { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
         public int Static28 { get; set; } = 0;
         public int Static2C { get; set; } = 0;
 
@@ -25,7 +25,7 @@ namespace EvtTool
             Static04 = reader.ReadInt32();
             Static08 = reader.ReadInt32();
             Static0C = reader.ReadInt32();
-            
+
             Field10 = reader.ReadInt32();
             Field14 = reader.ReadSingle();
             Field18 = reader.ReadSingle();

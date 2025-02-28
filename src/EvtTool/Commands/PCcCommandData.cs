@@ -4,10 +4,7 @@ namespace EvtTool
 {
     public sealed class PCcCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         public int Field04 { get; set; }
-        public int Static08 { get; set; } = 4354;
-        public int Static0C { get; set; } = 4354;
         public int Field10 { get; set; }
         public int Field14 { get; set; }
         public float Field18 { get; set; }
@@ -19,6 +16,9 @@ namespace EvtTool
         public int Field30 { get; set; }
         public float Field34 { get; set; }
         public int Field38 { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static08 { get; set; } = 4354;
+        public int Static0C { get; set; } = 4354;
         public int Static3C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )

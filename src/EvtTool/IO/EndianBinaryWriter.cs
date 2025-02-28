@@ -112,6 +112,11 @@ namespace EvtTool.IO
             base.Write(values);
         }
 
+        public void WriteColor(string color)
+        {
+            base.Write(Utils.ToBytes(color));
+        }
+
         public void Write( IEnumerable<sbyte> values)
         {
             foreach ( sbyte t in values )

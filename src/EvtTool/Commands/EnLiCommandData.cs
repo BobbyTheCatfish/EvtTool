@@ -28,10 +28,10 @@ namespace EvtTool
             Static0C = reader.ReadInt32();
 
             // gonna go out on a limb and say this is the same thing as in EnL0. is the order right? no clue!
-            Diffuse = ColorConvert.ToHexString(reader.ReadBytes(4));
-            Ambient = ColorConvert.ToHexString(reader.ReadBytes(4));
-            Specular = ColorConvert.ToHexString(reader.ReadBytes(4));
-            Emissive = ColorConvert.ToHexString(reader.ReadBytes(4));
+            Diffuse = reader.ReadColor();
+            Ambient = reader.ReadColor();
+            Specular = reader.ReadColor();
+            Emissive = reader.ReadColor();
             Distance = reader.ReadVector2();
 
             Static10 = reader.ReadInt32();
@@ -44,10 +44,10 @@ namespace EvtTool
             writer.Write( Static04 );
             writer.Write( Static08 );
             writer.Write( Static0C );
-            writer.Write( ColorConvert.ToBytes( Diffuse ) );
-            writer.Write( ColorConvert.ToBytes( Ambient ) );
-            writer.Write( ColorConvert.ToBytes( Specular ) );
-            writer.Write( ColorConvert.ToBytes( Emissive ) );
+            writer.WriteColor( Diffuse );
+            writer.WriteColor( Ambient );
+            writer.WriteColor( Specular );
+            writer.WriteColor( Emissive );
             writer.Write( Distance );
             writer.Write( Static10 );
             writer.Write( Static14 );

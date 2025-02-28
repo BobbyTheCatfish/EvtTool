@@ -4,6 +4,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Numerics;
+using System.Runtime.Remoting.Messaging;
+using System.Collections;
 
 namespace EvtTool.IO
 {
@@ -111,6 +113,12 @@ namespace EvtTool.IO
                 array[i] = ReadSByte();
 
             return array;
+        }
+
+        public string ReadColor(bool alpha = true)
+        {
+            byte[] colors = base.ReadBytes(alpha ? 4 : 3);
+            return Utils.ToHexString(colors);
         }
 
         public bool[] ReadBooleans(int count)

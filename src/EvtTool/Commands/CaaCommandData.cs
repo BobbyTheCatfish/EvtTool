@@ -7,7 +7,7 @@ namespace EvtTool
     public sealed class CaaCommandData : CommandData
     {
         public bool Field00 { get; set; }
-        public int Field04 { get; set; }
+        public int ParticlePakId { get; set; }
         public bool Field08 { get; set; }
         public float Static0C { get; set; } = 1;
         public int Unused10 { get; set; } = 0;
@@ -22,7 +22,7 @@ namespace EvtTool
         internal override void Read( Command command, EndianBinaryReader reader )
         {
             Field00 = reader.ReadInt32() == 1;
-            Field04 = reader.ReadInt32();
+            ParticlePakId = reader.ReadInt32();
             Field08 = reader.ReadInt32() == 1;
             // buncha useless values
             Static0C = reader.ReadSingle();
@@ -39,7 +39,7 @@ namespace EvtTool
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
             writer.Write( Field00 == true ? 1 : 0 );
-            writer.Write( Field04 );
+            writer.Write( ParticlePakId );
             writer.Write( Field08 == true ? 1 : 0 );
             writer.Write( Static0C );
             writer.Write( Unused10 );

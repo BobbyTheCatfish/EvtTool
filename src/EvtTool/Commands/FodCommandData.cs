@@ -4,15 +4,15 @@ namespace EvtTool
 {
     public class FodCommandData : CommandData
     {
-        public bool Field00 { get; set; }
-        public int Field04 { get; set; }
+        public bool Display { get; set; }
+        public int ObjectID { get; set; }
         public int Static08 { get; set; } = 0;
         public int Static0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32() == 1;
-            Field04 = reader.ReadInt32();
+            Display = reader.ReadInt32() == 1; // double check name
+            ObjectID = reader.ReadInt32(); // double check
 
             Static08 = reader.ReadInt32();
             Static0C = reader.ReadInt32();
@@ -20,8 +20,8 @@ namespace EvtTool
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 == true ? 1 : 0 );
-            writer.Write( Field04 );
+            writer.Write( Display == true ? 1 : 0 );
+            writer.Write( ObjectID );
             writer.Write( Static08 );
             writer.Write( Static0C );
         }

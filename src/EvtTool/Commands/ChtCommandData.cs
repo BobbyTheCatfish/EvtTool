@@ -6,8 +6,8 @@ namespace EvtTool
 {
     public sealed class ChtCommandData : CommandData
     {
-        public int Unused00 { get; set; } = 0;
         public int Field04 { get; set; }
+        public int Unused00 { get; set; } = 0;
         public int Unused08 { get; set; } = 0;
         public int Unused0C { get; set; } = 0;
 

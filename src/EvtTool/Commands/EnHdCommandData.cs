@@ -7,21 +7,21 @@ namespace EvtTool
     public sealed class EnHdCommandData : CommandData
     {
         public float BloomStrength { get; set; }
-        public float Field18 { get; set; }
         public float BloomDampener { get; set; }
         public int GlareAngles { get; set; }
         public float GlareLength { get; set; }
         public float GlareStrength { get; set; }
         public float GlareSaturation { get; set; }
         public float GlareDirection { get; set; }
+        public float Field18 { get; set; }
         public int Field00 { get; set; }
         public int Field04 { get; set; }
-        public int Static08 { get; set; } = 0;
-        public int Static0C { get; set; } = 0;
         public float Field10 { get; set; }
         public float Field34 { get; set; }
         public float Field38 { get; set; }
         public float Field3C { get; set; }
+        public int Static08 { get; set; } = 0;
+        public int Static0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {

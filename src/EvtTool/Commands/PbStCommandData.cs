@@ -4,14 +4,14 @@ namespace EvtTool
 {
     public sealed class PbStCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
         public int Field04 { get; set; }
-        public int Static08 { get; set; } = 4354;
-        public int Static0C { get; set; } = 4354;
         public float Field10 { get; set; }
         public float Field14 { get; set; }
         public int Field18 { get; set; }
         public float Field1C { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static08 { get; set; } = 4354;
+        public int Static0C { get; set; } = 4354;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {

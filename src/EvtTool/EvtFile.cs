@@ -100,7 +100,7 @@ namespace EvtTool
             Endianness = Endianness.Big;
 
             var magic = reader.ReadInt32();
-
+            Console.WriteLine(magic);
             if ((magic & 0xFFFFFF00) != MAGIC)
             {
                 throw new InvalidDataException("Magic value does not match");
@@ -272,3 +272,4 @@ namespace EvtTool
         }
     }
 }
+

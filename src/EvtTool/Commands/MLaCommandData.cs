@@ -9,32 +9,39 @@ namespace EvtTool
     public class MLaCommandData : CommandData
     {
         public Vector3 Position { get; set; }
-        public int Field00 { get; set; }
-        public int Field04 { get; set; }
-        public int Field08 { get; set; }
-        public int Field18 { get; set; }
-        public int Field1C { get; set; }
+        public int Flags { get; set; }
+        public short MotionType { get; set; }
+        public short SpeedType { get; set; }
+        public short TargetType { get; set; }
+        public int TargetModelId { get; set; }
+        public int TargetHelperID { get; set; }
+        public short Unused08 { get; set; }
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
-            Field00 = reader.ReadInt32();
-            Field04 = reader.ReadInt32();
-            Field08 = reader.ReadInt32();
+            Flags = reader.ReadInt32();
+            MotionType = reader.ReadInt16();
+            SpeedType = reader.ReadInt16();
+
+            Unused08 = reader.ReadInt16();
+
+            TargetType = reader.ReadInt16();
             Position = reader.ReadVector3();
-            // 0-18
-            Field18 = reader.ReadInt32();
-            Field1C = reader.ReadInt32();
+            TargetModelId = reader.ReadInt32();
+            TargetHelperID = reader.ReadInt32();
         }
 
 
         internal override void Write( Command command, EndianBinaryWriter writer )
         {
-            writer.Write( Field00 );
-            writer.Write( Field04 );
-            writer.Write( Field08 );
+            writer.Write( Flags );
+            writer.Write( MotionType );
+            writer.Write( SpeedType );
+            writer.Write( Unused08 );
+            writer.Write( TargetType );
             writer.Write( Position );
-            writer.Write( Field18 );
-            writer.Write( Field1C );
+            writer.Write( TargetModelId );
+            writer.Write( TargetHelperID );
         }
     }
 

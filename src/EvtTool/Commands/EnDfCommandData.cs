@@ -9,13 +9,13 @@ namespace EvtTool
         public int Field00 { get; set; }
         public int Field04 { get; set; }
         public int Field08 { get; set; }
-        public int Static0C { get; set; } = 0;
         public float Field10 { get; set; }
         public float Field14 { get; set; }
         public float Field18 { get; set; }
         public float Field1C { get; set; }
         public float Field20 { get; set; }
         public int Field24 { get; set; }
+        public int Static0C { get; set; } = 0;
         public int Static28 { get; set; } = 0;
         public int Static2C { get; set; } = 0;
 

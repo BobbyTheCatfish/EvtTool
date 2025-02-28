@@ -33,9 +33,9 @@ namespace EvtTool
 
         public enum poemType : int
         {
-            rankup,
-            max,
-            gameover
+            Start = 0,
+            Max = 1,
+            GameOver = 2
         }
     }
 }

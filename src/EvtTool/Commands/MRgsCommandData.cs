@@ -8,8 +8,8 @@ namespace EvtTool
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public RegisterStatus Action { get; set; }
+        public int Scene { get; set; } = 0;
         public int Static00 { get; set; } = 0;
-        public int Static08 { get; set; } = 0;
         public int Static0C { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
@@ -17,8 +17,8 @@ namespace EvtTool
             Static00 = reader.ReadInt32();
 
             Action = (RegisterStatus)reader.ReadInt32();
+            Scene = reader.ReadInt32();
 
-            Static08 = reader.ReadInt32();
             Static0C = reader.ReadInt32();
         }
 
@@ -26,7 +26,7 @@ namespace EvtTool
         {
             writer.Write( Static00 );
             writer.Write( (int)Action );
-            writer.Write( Static08 );
+            writer.Write( Scene );
             writer.Write( Static0C );
         }
 

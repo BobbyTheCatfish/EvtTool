@@ -10,17 +10,17 @@ namespace EvtTool
         public short ImageMinorId { get; set; }
         public int Opacity { get; set; }
         public int ObjDrawOverImage { get; set; }
-        public int Static00 { get; set; } = 0;
-        public int Static0C { get; set; } = 1;
-        public float Static10 { get; set; } = 80;
-        public float Static14 { get; set; } = 250;
         public float Field18 { get; set; }
         public float Field1C { get; set; }
         public float Field20 { get; set; }
         public float Field24 { get; set; }
-        public float Static28 { get; set; } = 15;
         public int Field30 { get; set; }
         public int Field34 { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static0C { get; set; } = 1;
+        public float Static10 { get; set; } = 80;
+        public float Static14 { get; set; } = 250;
+        public float Static28 { get; set; } = 15;
         public int Static38 { get; set; }
         public int Static3C { get; set; }
         public int Static40 { get; set; }

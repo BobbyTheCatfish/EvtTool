@@ -25,7 +25,7 @@ namespace EvtTool
             Field10 = reader.ReadInt32();
             LowerBounds = reader.ReadSingle();
             UpperBounds = reader.ReadSingle();
-            Color = ColorConvert.ToHexString( reader.ReadBytes(4) );
+            Color = reader.ReadColor();
         }
 
         internal override void Write( Command command, EndianBinaryWriter writer )
@@ -37,7 +37,7 @@ namespace EvtTool
             writer.Write( Field10 );
             writer.Write( LowerBounds );
             writer.Write( UpperBounds );
-            writer.Write( ColorConvert.ToBytes( Color ) );
+            writer.WriteColor(Color);
         }
     }
 }

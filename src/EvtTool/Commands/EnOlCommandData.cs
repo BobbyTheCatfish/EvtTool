@@ -6,14 +6,14 @@ namespace EvtTool
 {
     public sealed class EnOlCommandData : CommandData
     {
-        public int Static00 { get; set; } = 0;
-        public int Static04 { get; set; } = 4354;
         public float Field08 { get; set; }
         public float Field0C { get; set; }
         public float Field10 { get; set; }
         public float Field14 { get; set; }
         public float Field18 { get; set; }
         public int Field1C { get; set; }
+        public int Static00 { get; set; } = 0;
+        public int Static04 { get; set; } = 4354;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {

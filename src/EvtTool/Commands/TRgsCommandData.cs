@@ -8,9 +8,9 @@ namespace EvtTool
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public RegisterStatus Action { get; set; }
-        public int Static00 { get; set; } = 0;
         public int Field08 { get; set; }
         public int Field0C { get; set; }
+        public int Static00 { get; set; } = 0;
 
         internal override void Read( Command command, EndianBinaryReader reader )
         {
