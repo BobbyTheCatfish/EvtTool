@@ -147,7 +147,7 @@
     <Compile Include="Commands\GgGgCommandData.cs" />
     <Compile Include="Commands\FsCommandData.cs" />
     <Compile Include="ICommandList.cs" />
-    <Compile Include="IO\ColorConvert.cs" />
+    <Compile Include="IO\Utils.cs" />
     <Compile Include="IO\Endianness.cs" />
     <Compile Include="ISaveable.cs" />
     <Compile Include="Json\Converters\ByteArrayJsonConverter.cs" />
